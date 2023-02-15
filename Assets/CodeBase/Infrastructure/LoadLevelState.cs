@@ -5,6 +5,8 @@ namespace CodeBase.Infrastructure
 {
     public class LoadLevelState : IPayloadedState<string>
     {
+        private const string InitialPointTag = "InitialPoint";
+        
         private readonly GameStateMachine _gameStateMachine;
         private readonly SceneLoader _sceneLoader;
 
@@ -23,10 +25,11 @@ namespace CodeBase.Infrastructure
 
         private static void OnLoaded()
         {
-            GameObject hero = Instantiate("Hero/hero");
-            Instantiate("Hud/Hud");
-
+            GameObject initialPoint = GameObject.FindWithTag(InitialPointTag);
+            GameObject hero = Instantiate("Hero/hero", at: initialPoint.transform.position);
             CameraFollow(hero);
+            
+            Instantiate("Hud/Hud");
         }
 
         private static void CameraFollow(GameObject hero) =>
@@ -36,6 +39,12 @@ namespace CodeBase.Infrastructure
         {
             var prefab = Resources.Load<GameObject>(path);
             return Object.Instantiate(prefab);
+        }
+        
+        private static GameObject Instantiate(string path, Vector3 at)
+        {
+            var prefab = Resources.Load<GameObject>(path);
+            return Object.Instantiate(prefab, at, Quaternion.identity);
         }
     }
 }
