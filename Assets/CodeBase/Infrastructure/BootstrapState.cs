@@ -27,8 +27,8 @@ namespace CodeBase.Infrastructure
             Game.InputService = RegisterInputService();
         }
 
-        private void EnterLoadLevel() => 
-            _stateMachine.Enter<LoadLevelState>();
+        private void EnterLoadLevel() =>
+            _stateMachine.Enter<LoadLevelState, string>("Main");
 
         public void Exit()
         {

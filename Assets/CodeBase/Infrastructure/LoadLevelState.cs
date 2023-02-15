@@ -2,7 +2,7 @@
 
 namespace CodeBase.Infrastructure
 {
-    public class LoadLevelState : IState
+    public class LoadLevelState : IPayloadedState<string>
     {
         private readonly GameStateMachine _gameStateMachine;
         private readonly SceneLoader _sceneLoader;
@@ -13,10 +13,8 @@ namespace CodeBase.Infrastructure
             _sceneLoader = sceneLoader;
         }
 
-        public void Enter()
-        {
-            _sceneLoader.Load("Main");
-        }
+        public void Enter(string sceneName) => 
+            _sceneLoader.Load(sceneName);
 
         public void Exit()
         {
