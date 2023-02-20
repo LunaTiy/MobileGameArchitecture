@@ -19,11 +19,12 @@ namespace CodeBase.Infrastructure.States
             _stateMachine = stateMachine;
             _sceneLoader = sceneLoader;
             _services = services;
+            
+            RegisterServices();
         }
 
         public void Enter() 
         {
-            RegisterServices();
             _sceneLoader.Load(Initial, onLoaded: EnterLoadLevel);
         }
 
