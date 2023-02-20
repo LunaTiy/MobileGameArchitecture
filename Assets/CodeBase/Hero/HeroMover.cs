@@ -1,5 +1,5 @@
 ﻿using CodeBase.Infrastructure.Services;
-using CodeBase.Services.Input;
+using CodeBase.Infrastructure.Services.Input;
 using UnityEngine;
 
 namespace CodeBase.Hero
