@@ -19,27 +19,26 @@ namespace CodeBase.Infrastructure.States
             _sceneLoader = sceneLoader;
         }
 
-        public void Enter()
+        public void Enter() 
         {
             RegisterServices();
             _sceneLoader.Load(Initial, onLoaded: EnterLoadLevel);
         }
 
+        public void Exit()
+        {
+        }
+
         private void RegisterServices()
         {
-            Game.InputService = RegisterInputService();
-
+            AllServices.Container.RegisterSingle<IInputService>(GetInputService());
             AllServices.Container.RegisterSingle<IGameFactory>(new GameFactory(AllServices.Container.Single<IAssetProvider>()));
         }
 
         private void EnterLoadLevel() =>
             _stateMachine.Enter<LoadLevelState, string>("Main");
 
-        public void Exit()
-        {
-        }
-
-        private static IInputService RegisterInputService() =>
+        private static IInputService GetInputService() =>
             Application.isEditor
                 ? new StandaloneInputService()
                 : new MobileInputService();
