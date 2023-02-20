@@ -1,7 +1,4 @@
-﻿using System;
-using CodeBase.CameraLogic;
-using CodeBase.Infrastructure;
-using CodeBase.Infrastructure.Services;
+﻿using CodeBase.Infrastructure.Services;
 using CodeBase.Services.Input;
 using UnityEngine;
 
