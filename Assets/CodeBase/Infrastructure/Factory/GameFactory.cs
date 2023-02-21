@@ -8,19 +8,19 @@ namespace CodeBase.Infrastructure.Factory
     public class GameFactory : IGameFactory
     {
         private readonly IAssetProvider _assetProvider;
-        
+
         public List<ISavedProgressReader> ProgressReaders { get; } = new();
-        public List<ISavedProgress> ProgressWriters { get; }= new();
+        public List<ISavedProgress> ProgressWriters { get; } = new();
 
         public GameFactory(IAssetProvider assetProvider)
         {
             _assetProvider = assetProvider;
         }
 
-        public GameObject CreateHero(Vector3 at) => 
+        public GameObject CreateHero(Vector3 at) =>
             InstantiateRegistered(AssetPath.HeroPath, at);
 
-        public void CreateHud() => 
+        public void CreateHud() =>
             InstantiateRegistered(AssetPath.HudPath);
 
         public void Cleanup()
@@ -43,18 +43,18 @@ namespace CodeBase.Infrastructure.Factory
             return gameObject;
         }
 
-        private void Register(ISavedProgressReader progressReader)
-        {
-            if(progressReader is ISavedProgress progressWriter)
-                ProgressWriters.Add(progressWriter);
-            
-            ProgressReaders.Add(progressReader);
-        }
-
         private void RegisterProgressWatchers(GameObject gameObject)
         {
             foreach (ISavedProgressReader progressReader in gameObject.GetComponentsInChildren<ISavedProgressReader>())
                 Register(progressReader);
+        }
+
+        private void Register(ISavedProgressReader progressReader)
+        {
+            if (progressReader is ISavedProgress progressWriter)
+                ProgressWriters.Add(progressWriter);
+
+            ProgressReaders.Add(progressReader);
         }
     }
 }

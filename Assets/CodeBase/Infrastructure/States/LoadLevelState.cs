@@ -1,5 +1,6 @@
 ﻿using CodeBase.CameraLogic;
 using CodeBase.Infrastructure.Factory;
+using CodeBase.Infrastructure.Services.PersistentProgress;
 using CodeBase.Logic;
 using UnityEngine;
 
@@ -13,14 +14,16 @@ namespace CodeBase.Infrastructure.States
         private readonly SceneLoader _sceneLoader;
         private readonly LoadingCurtain _loadingCurtain;
         private readonly IGameFactory _gameFactory;
+        private readonly IPersistentProgressService _progressService;
 
         public LoadLevelState(GameStateMachine gameStateMachine, SceneLoader sceneLoader, LoadingCurtain loadingCurtain,
-            IGameFactory gameFactory)
+            IGameFactory gameFactory, IPersistentProgressService progressService)
         {
             _gameStateMachine = gameStateMachine;
             _sceneLoader = sceneLoader;
             _loadingCurtain = loadingCurtain;
             _gameFactory = gameFactory;
+            _progressService = progressService;
         }
 
         public void Enter(string sceneName)
@@ -34,12 +37,24 @@ namespace CodeBase.Infrastructure.States
 
         private void OnLoaded()
         {
-            GameObject hero = _gameFactory.CreateHero(at: GameObject.FindWithTag(InitialPointTag).transform.position);
-            CameraFollow(hero);
-
-            _gameFactory.CreateHud();
+            InitializeGameWorld();
+            InformProgressReaders();
 
             _gameStateMachine.Enter<GameLoopState>();
+        }
+
+        private void InformProgressReaders()
+        {
+            foreach (ISavedProgressReader progressReader in _gameFactory.ProgressReaders)
+                progressReader.LoadProgress(_progressService.Progress);
+        }
+
+        private void InitializeGameWorld()
+        {
+            GameObject hero = _gameFactory.CreateHero(at: GameObject.FindWithTag(InitialPointTag).transform.position);
+            _gameFactory.CreateHud();
+            
+            CameraFollow(hero);
         }
 
         private static void CameraFollow(GameObject hero) =>

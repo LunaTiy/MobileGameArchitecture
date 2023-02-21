@@ -10,6 +10,9 @@ namespace CodeBase.Data
         public static Vector3 AsUnityVector(this Vector3Data vector3Data) =>
             new(vector3Data.x, vector3Data.y, vector3Data.z);
 
+        public static string ToJson(this object obj) =>
+            JsonUtility.ToJson(obj);
+
         public static T ToDeserialized<T>(this string json) => 
             JsonUtility.FromJson<T>(json);
     }
