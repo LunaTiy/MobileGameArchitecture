@@ -12,8 +12,8 @@ namespace CodeBase.Infrastructure.Factory
             _assetProvider = assetProvider;
         }
 
-        public GameObject CreateHero(Vector3 position) => 
-            _assetProvider.Instantiate(AssetPath.HeroPath, position);
+        public GameObject CreateHero(Vector3 at) => 
+            _assetProvider.Instantiate(AssetPath.HeroPath, at);
 
         public void CreateHud() => 
             _assetProvider.Instantiate(AssetPath.HudPath);

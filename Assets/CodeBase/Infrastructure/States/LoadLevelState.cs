@@ -14,7 +14,8 @@ namespace CodeBase.Infrastructure.States
         private readonly LoadingCurtain _loadingCurtain;
         private readonly IGameFactory _gameFactory;
 
-        public LoadLevelState(GameStateMachine gameStateMachine, SceneLoader sceneLoader, LoadingCurtain loadingCurtain, IGameFactory gameFactory)
+        public LoadLevelState(GameStateMachine gameStateMachine, SceneLoader sceneLoader, LoadingCurtain loadingCurtain,
+            IGameFactory gameFactory)
         {
             _gameStateMachine = gameStateMachine;
             _sceneLoader = sceneLoader;
@@ -32,7 +33,7 @@ namespace CodeBase.Infrastructure.States
 
         private void OnLoaded()
         {
-            GameObject hero = _gameFactory.CreateHero(GameObject.FindWithTag(InitialPointTag).transform.position);
+            GameObject hero = _gameFactory.CreateHero(at: GameObject.FindWithTag(InitialPointTag).transform.position);
             CameraFollow(hero);
 
             _gameFactory.CreateHud();
