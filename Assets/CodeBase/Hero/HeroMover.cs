@@ -44,11 +44,9 @@ namespace CodeBase.Hero
             _characterController.Move(movementVector * (_movementSpeed * Time.deltaTime));
         }
 
-        public void SaveProgress(PlayerProgress progress)
-        {
+        public void SaveProgress(PlayerProgress progress) =>
             progress.worldData.positionOnLevel =
                 new PositionOnLevel(GetCurrentLevel(), transform.position.AsVectorData());
-        }
 
         public void LoadProgress(PlayerProgress progress)
         {
@@ -56,8 +54,8 @@ namespace CodeBase.Hero
                 return;
 
             Vector3Data savedPosition = progress.worldData.positionOnLevel.position;
-            
-            if (savedPosition != null) 
+
+            if (savedPosition != null)
                 Warp(to: savedPosition);
         }
 
@@ -68,7 +66,7 @@ namespace CodeBase.Hero
             _characterController.enabled = true;
         }
 
-        private static string GetCurrentLevel() => 
+        private static string GetCurrentLevel() =>
             SceneManager.GetActiveScene().name;
     }
 }

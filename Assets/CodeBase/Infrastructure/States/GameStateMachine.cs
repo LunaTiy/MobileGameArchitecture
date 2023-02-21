@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using CodeBase.Infrastructure.Factory;
 using CodeBase.Infrastructure.Services;
+using CodeBase.Infrastructure.Services.PersistentProgress;
+using CodeBase.Infrastructure.Services.SaveLoad;
 using CodeBase.Logic;
 
 namespace CodeBase.Infrastructure.States
@@ -16,11 +18,14 @@ namespace CodeBase.Infrastructure.States
             _states = new Dictionary<Type, IExitableState>
             {
                 [typeof(BootstrapState)] = new BootstrapState(this, sceneLoader, services),
-                [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, loadingCurtain, services.Single<IGameFactory>()),
+                [typeof(LoadLevelState)] =
+                    new LoadLevelState(this, sceneLoader, loadingCurtain, services.Single<IGameFactory>()),
+                [typeof(LoadProgressState)] = new LoadProgressState(this, services.Single<IPersistentProgressService>(),
+                    services.Single<ISavedLoadService>()),
                 [typeof(GameLoopState)] = new GameLoopState(this)
             };
         }
-        
+
         public void Enter<TState>() where TState : class, IState
         {
             IState state = ChangeState<TState>();
@@ -39,11 +44,11 @@ namespace CodeBase.Infrastructure.States
 
             TState state = GetState<TState>();
             _activeState = state;
-            
+
             return state;
         }
 
-        private TState GetState<TState>() where TState : class, IExitableState => 
+        private TState GetState<TState>() where TState : class, IExitableState =>
             _states[typeof(TState)] as TState;
     }
 }

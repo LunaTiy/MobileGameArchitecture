@@ -33,6 +33,9 @@ namespace CodeBase.Infrastructure.States
         {
         }
 
+        private void EnterLoadLevel() =>
+            _stateMachine.Enter<LoadLevelState, string>("Main");
+
         private void RegisterServices()
         {
             _services.RegisterSingle<IInputService>(GetInputService());
@@ -40,9 +43,6 @@ namespace CodeBase.Infrastructure.States
             _services.RegisterSingle<IPersistentProgressService>(new PersistentProgressService());
             _services.RegisterSingle<IGameFactory>(new GameFactory(_services.Single<IAssetProvider>()));
         }
-
-        private void EnterLoadLevel() =>
-            _stateMachine.Enter<LoadLevelState, string>("Main");
 
         private static InputService GetInputService() =>
             Application.isEditor
