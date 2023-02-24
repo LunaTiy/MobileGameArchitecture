@@ -26,7 +26,7 @@ namespace CodeBase.Enemy
 
         private void Update()
         {
-            if (HasHeroTransform() & HeroNotReached())
+            if (HasHeroTransform() && HeroNotReached())
                 _agent.destination = _heroTransform.position;
         }
 
