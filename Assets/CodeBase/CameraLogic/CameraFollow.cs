@@ -15,8 +15,8 @@ namespace CodeBase.CameraLogic
             if (_followingTransform == null)
                 return;
 
-            var rotation = Quaternion.Euler(_rotationAngleX, 0, 0);
-            var position = rotation * new Vector3(0, 0, -_distance) + GetFollowingPosition();
+            Quaternion rotation = Quaternion.Euler(_rotationAngleX, 0, 0);
+            Vector3 position = rotation * new Vector3(0, 0, -_distance) + GetFollowingPosition();
 
             transform.rotation = rotation;
             transform.position = position;
@@ -26,7 +26,7 @@ namespace CodeBase.CameraLogic
 
         private Vector3 GetFollowingPosition()
         {
-            var followingPosition = _followingTransform.position;
+            Vector3 followingPosition = _followingTransform.position;
             followingPosition.y = _offsetY;
             
             return followingPosition;
