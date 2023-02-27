@@ -1,4 +1,5 @@
-﻿using CodeBase.Infrastructure.Factory;
+﻿using System.Linq;
+using CodeBase.Infrastructure.Factory;
 using CodeBase.Infrastructure.Services;
 using UnityEngine;
 
@@ -7,18 +8,25 @@ namespace CodeBase.Enemy
     [RequireComponent(typeof(EnemyAnimator))]
     public class Attack : MonoBehaviour
     {
-        [SerializeField] private float _attackCooldown = 2f;
         [SerializeField] private EnemyAnimator _animator;
+        [SerializeField] private float _attackCooldown = 2f;
+        [SerializeField] private float _attackRange = 0.5f;
+        [SerializeField] private float _weaponHitBoxRadius = 0.5f;
+        [SerializeField] private float _weaponYOffset = 0.5f;
+
+        private readonly Collider[] _hits = new Collider[1];
 
         private IGameFactory _gameFactory;
         private Transform _heroTransform;
 
         private float _elapsedCooldownTime;
         private bool _isAttacking;
+        private int _layerMask;
 
         private void Start()
         {
             _gameFactory = AllServices.Container.Single<IGameFactory>();
+            _layerMask = 1 << LayerMask.NameToLayer("Player");
 
             if (_gameFactory.Hero != null)
                 InitializeHeroTransform();
@@ -30,13 +38,28 @@ namespace CodeBase.Enemy
         {
             UpdateCooldown();
 
-            if(CanAttack())
+            if (CanAttack())
                 StartAttack();
         }
 
         private void AttackHandler()
         {
+            if (Hit(out Collider hit))
+            {
+            }
         }
+
+        private bool Hit(out Collider hit)
+        {
+            int hitsCount = Physics.OverlapSphereNonAlloc(GetWeaponStartPoint(), _weaponHitBoxRadius, _hits, _layerMask);
+            hit = _hits.FirstOrDefault();
+
+            return hitsCount > 0;
+        }
+
+        private Vector3 GetWeaponStartPoint() =>
+            new Vector3(transform.position.x, transform.position.y + _weaponYOffset, transform.position.z) +
+            transform.forward * _attackRange;
 
         private void AttackEndedHandler()
         {
@@ -50,10 +73,10 @@ namespace CodeBase.Enemy
                 _elapsedCooldownTime += Time.deltaTime;
         }
 
-        private bool CanAttack() => 
+        private bool CanAttack() =>
             !_isAttacking && IsUpCooldown();
 
-        private bool IsUpCooldown() => 
+        private bool IsUpCooldown() =>
             _elapsedCooldownTime >= _attackCooldown;
 
         private void StartAttack()
@@ -64,7 +87,7 @@ namespace CodeBase.Enemy
             _isAttacking = true;
         }
 
-        private void InitializeHeroTransform() => 
+        private void InitializeHeroTransform() =>
             _heroTransform = _gameFactory.Hero.transform;
     }
 }
