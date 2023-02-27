@@ -42,11 +42,20 @@ namespace CodeBase.Enemy
                 StartAttack();
         }
 
-        private void AttackHandler()
+        // Using from animation attack
+        private void OnAttack()
         {
             if (Hit(out Collider hit))
             {
+                DrawDebugTools.DrawSphere(GetWeaponStartPoint(), _weaponHitBoxRadius, 1f, Color.red);
             }
+        }
+
+        // Using from animation attack
+        private void OnAttackEnded()
+        {
+            _elapsedCooldownTime = 0f;
+            _isAttacking = false;
         }
 
         private bool Hit(out Collider hit)
@@ -60,12 +69,6 @@ namespace CodeBase.Enemy
         private Vector3 GetWeaponStartPoint() =>
             new Vector3(transform.position.x, transform.position.y + _weaponYOffset, transform.position.z) +
             transform.forward * _attackRange;
-
-        private void AttackEndedHandler()
-        {
-            _elapsedCooldownTime = 0f;
-            _isAttacking = false;
-        }
 
         private void UpdateCooldown()
         {
