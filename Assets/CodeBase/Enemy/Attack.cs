@@ -22,6 +22,8 @@ namespace CodeBase.Enemy
         private float _elapsedCooldownTime;
         private bool _isAttacking;
         private int _layerMask;
+        
+        private bool _isActiveAttack;
 
         private void Start()
         {
@@ -58,6 +60,10 @@ namespace CodeBase.Enemy
             _isAttacking = false;
         }
 
+        public void EnableAttack() => _isActiveAttack = true;
+
+        public void DisableAttack() => _isActiveAttack = false;
+
         private bool Hit(out Collider hit)
         {
             int hitsCount = Physics.OverlapSphereNonAlloc(GetWeaponStartPoint(), _weaponHitBoxRadius, _hits, _layerMask);
@@ -77,7 +83,7 @@ namespace CodeBase.Enemy
         }
 
         private bool CanAttack() =>
-            !_isAttacking && IsUpCooldown();
+            _isActiveAttack && !_isAttacking && IsUpCooldown();
 
         private bool IsUpCooldown() =>
             _elapsedCooldownTime >= _attackCooldown;
