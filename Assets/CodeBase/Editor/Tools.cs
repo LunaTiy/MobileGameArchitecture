@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace CodeBase.Editor
 {
-    public class Tools
+    public static class Tools
     {
         [MenuItem("Tools/Clear prefs")]
         public static void ClearPrefs()
