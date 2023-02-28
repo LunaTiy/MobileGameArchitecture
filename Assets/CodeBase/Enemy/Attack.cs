@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using CodeBase.Hero;
 using CodeBase.Infrastructure.Factory;
 using CodeBase.Infrastructure.Services;
 using UnityEngine;
@@ -14,6 +15,8 @@ namespace CodeBase.Enemy
         [SerializeField] private float _weaponHitBoxRadius = 0.5f;
         [SerializeField] private float _weaponYOffset = 0.5f;
 
+        [SerializeField] private float _damage = 5f;
+        
         private readonly Collider[] _hits = new Collider[1];
 
         private IGameFactory _gameFactory;
@@ -22,7 +25,7 @@ namespace CodeBase.Enemy
         private float _elapsedCooldownTime;
         private bool _isAttacking;
         private int _layerMask;
-        
+
         private bool _isActiveAttack;
 
         private void Start()
@@ -50,6 +53,7 @@ namespace CodeBase.Enemy
             if (Hit(out Collider hit))
             {
                 DrawDebugTools.DrawSphere(GetWeaponStartPoint(), _weaponHitBoxRadius, 1f, Color.red);
+                hit.transform.GetComponent<HeroHealth>().GetDamage(_damage);
             }
         }
 

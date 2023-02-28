@@ -5,9 +5,9 @@ namespace CodeBase.UI
 {
     public class HpBar : MonoBehaviour
     {
-        [SerializeField] private Image _currentImage;
+        [SerializeField] private Image _fillArea;
 
         public void SetValue(float current, float max) =>
-            _currentImage.fillAmount = current / max;
+            _fillArea.fillAmount = current / max;
     }
 }
