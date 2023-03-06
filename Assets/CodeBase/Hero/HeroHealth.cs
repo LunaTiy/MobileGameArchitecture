@@ -17,7 +17,7 @@ namespace CodeBase.Hero
         public float CurrentHp
         {
             get => _state.currentHp;
-            set
+            private set
             {
                 if (Math.Abs(_state.currentHp - value) < 0.01f)
                     return;
