@@ -1,5 +1,5 @@
 ﻿using CodeBase.Data;
-using CodeBase.Hero;
+using CodeBase.Logic;
 using UnityEngine;
 
 namespace CodeBase.UI
@@ -8,16 +8,16 @@ namespace CodeBase.UI
     {
         [SerializeField] private HpBar _hpBar;
 
-        private HeroHealth _health;
+        private IHealth _health;
 
-        public void Construct(HeroHealth health)
+        public void Construct(IHealth health)
         {
             _health = health
-                .With(x => x.healthChanged += HealthChangedHandler);
+                .With(x => x.HealthChanged += HealthChangedHandler);
         }
 
         private void OnDestroy() => 
-            _health.healthChanged -= HealthChangedHandler;
+            _health.HealthChanged -= HealthChangedHandler;
 
         private void HealthChangedHandler() => 
             _hpBar.SetValue(_health.CurrentHp, _health.MaxHp);

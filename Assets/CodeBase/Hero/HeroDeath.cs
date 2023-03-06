@@ -16,10 +16,10 @@ namespace CodeBase.Hero
         private bool _isDead;
 
         private void OnEnable() => 
-            _health.healthChanged += HealthChangedHandler;
+            _health.HealthChanged += HealthChangedHandler;
 
         private void OnDisable() => 
-            _health.healthChanged -= HealthChangedHandler;
+            _health.HealthChanged -= HealthChangedHandler;
 
         private void HealthChangedHandler()
         {
