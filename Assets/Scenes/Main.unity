@@ -720,7 +720,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1462183160, guid: 274c4c35ed05ea14c87492064b3cadfd, type: 3}
       propertyPath: _damage
-      value: 20
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1462183160, guid: 274c4c35ed05ea14c87492064b3cadfd, type: 3}
       propertyPath: _attackCooldown
@@ -736,15 +736,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4665124114459090, guid: 274c4c35ed05ea14c87492064b3cadfd, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 11.240989
+      value: 11.221878
       objectReference: {fileID: 0}
     - target: {fileID: 4665124114459090, guid: 274c4c35ed05ea14c87492064b3cadfd, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.90596294
+      value: 0.20000029
       objectReference: {fileID: 0}
     - target: {fileID: 4665124114459090, guid: 274c4c35ed05ea14c87492064b3cadfd, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -5.5403957
+      value: -5.6588345
       objectReference: {fileID: 0}
     - target: {fileID: 4665124114459090, guid: 274c4c35ed05ea14c87492064b3cadfd, type: 3}
       propertyPath: m_LocalRotation.w
@@ -772,6 +772,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4665124114459090, guid: 274c4c35ed05ea14c87492064b3cadfd, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1677867634441254409, guid: 274c4c35ed05ea14c87492064b3cadfd,
+        type: 3}
+      propertyPath: m_IsTrigger
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -1187,11 +1192,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1462183160, guid: 274c4c35ed05ea14c87492064b3cadfd, type: 3}
       propertyPath: _damage
-      value: 25
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1462183160, guid: 274c4c35ed05ea14c87492064b3cadfd, type: 3}
       propertyPath: _attackCooldown
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1500939411536426, guid: 274c4c35ed05ea14c87492064b3cadfd, type: 3}
       propertyPath: m_Name
@@ -1239,6 +1244,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4665124114459090, guid: 274c4c35ed05ea14c87492064b3cadfd, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1677867634441254409, guid: 274c4c35ed05ea14c87492064b3cadfd,
+        type: 3}
+      propertyPath: m_IsTrigger
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

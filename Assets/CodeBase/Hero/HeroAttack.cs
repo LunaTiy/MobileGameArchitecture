@@ -1,4 +1,5 @@
 ﻿using CodeBase.Data;
+using CodeBase.Enemy;
 using CodeBase.Infrastructure.Services;
 using CodeBase.Infrastructure.Services.Input;
 using CodeBase.Infrastructure.Services.PersistentProgress;
@@ -17,7 +18,7 @@ namespace CodeBase.Hero
 
         private readonly Collider[] _hits = new Collider[3];
         private int _layerMask;
-        
+
         private Stats _heroStats;
 
         private void Awake()
@@ -28,23 +29,30 @@ namespace CodeBase.Hero
 
         private void Update()
         {
-            if(_inputService.IsAttackButtonUp() && !_heroAnimator.IsAttacking)
+            if (_inputService.IsAttackButtonUp() && !_heroAnimator.IsAttacking)
                 _heroAnimator.PlayAttack();
         }
 
         private void OnAttack()
         {
+            DrawDebugTools.DrawSphere(GetWeaponStartPoint(), _heroStats.attackRadius, 1f, Color.red);
+
             for (var i = 0; i < Hit(); i++)
-                _hits[i].transform.parent.GetComponent<IHealth>().TakeDamage(_heroStats.damage);
+            {
+                IHealth health = _hits[i].transform.parent.GetComponent<IHealth>();
+                health.TakeDamage(_heroStats.damage);
+            }
         }
 
-        public void LoadProgress(PlayerProgress progress) => 
+        public void LoadProgress(PlayerProgress progress) =>
             _heroStats = progress.heroStats;
 
         private int Hit() =>
-            Physics.OverlapSphereNonAlloc(GetWeaponStartPoint() + transform.forward, _heroStats.attackRadius, _hits, _layerMask);
+            Physics.OverlapSphereNonAlloc(GetWeaponStartPoint() + transform.forward, _heroStats.attackRadius, _hits,
+                _layerMask);
 
         private Vector3 GetWeaponStartPoint() =>
-            new(transform.position.x, _characterController.center.y / 2, transform.position.z);
+            new Vector3(transform.position.x, _characterController.center.y, transform.position.z) +
+            transform.forward * _heroStats.attackRadius;
     }
 }
