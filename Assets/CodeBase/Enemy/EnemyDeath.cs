@@ -11,6 +11,7 @@ namespace CodeBase.Enemy
             
         [SerializeField] private EnemyHealth _health;
         [SerializeField] private EnemyAnimator _animator;
+        [SerializeField] private Follow _follow;
         [SerializeField] private GameObject _deathFx;
         [SerializeField] private Vector3 _fxOffset;
         [SerializeField] private float _delayToDestroy = 3f;
@@ -31,6 +32,7 @@ namespace CodeBase.Enemy
         {
             _health.HealthChanged -= HealthChangedHandler;
             _animator.PlayDeath();
+            _follow.enabled = false;
 
             CreateDeathFx();
             StartCoroutine(DestroyRoutine());
