@@ -26,12 +26,12 @@ namespace CodeBase.Hero
         [SerializeField] private Animator _animator;
         [SerializeField] private CharacterController _characterController;
 
+        public bool IsAttacking => State == AnimatorState.Attack;
+
         private void Update()
         {
             _animator.SetFloat(MoveHash, _characterController.velocity.magnitude, 0.1f, Time.deltaTime);
         }
-
-        public bool IsAttacking => State == AnimatorState.Attack;
 
         public void PlayHit()
         {

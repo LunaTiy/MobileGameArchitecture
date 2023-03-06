@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace CodeBase.Enemy
 {
@@ -17,14 +16,10 @@ namespace CodeBase.Enemy
             _attack.DisableAttack();
         }
 
-        private void TriggerEnteredHandler(Collider obj)
-        {
+        private void TriggerEnteredHandler(Collider obj) => 
             _attack.EnableAttack();
-        }
 
-        private void TriggerExitedHandler(Collider obj)
-        {
+        private void TriggerExitedHandler(Collider obj) => 
             _attack.DisableAttack();
-        }
     }
 }

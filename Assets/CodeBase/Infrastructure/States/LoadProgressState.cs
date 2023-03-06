@@ -35,6 +35,8 @@ namespace CodeBase.Infrastructure.States
         private static PlayerProgress NewProgress() =>
             new PlayerProgress(initialLevel: "Main")
                 .With(x => x.heroState.maxHp = 50f)
-                .With(x => x.heroState.ResetHp());
+                .With(x => x.heroState.ResetHp())
+                .With(x => x.heroStats.damage = 1f)
+                .With(x => x.heroStats.attackRadius = 0.5f);
     }
 }

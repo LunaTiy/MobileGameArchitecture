@@ -8,6 +8,7 @@ namespace CodeBase.Hero
         [SerializeField] private HeroHealth _health;
         [SerializeField] private HeroMover _heroMover;
         [SerializeField] private HeroAnimator _heroAnimator;
+        [SerializeField] private HeroAttack _heroAttack;
         
         [SerializeField] private GameObject _deathFx;
         [SerializeField] private Vector3 _fxOffset;
@@ -32,7 +33,10 @@ namespace CodeBase.Hero
         private void Die()
         {
             _isDead = true;
+            
             _heroMover.enabled = false;
+            _heroAttack.enabled = false;
+            
             _heroAnimator.PlayDeath();
 
             Instantiate(_deathFx, transform.position + _fxOffset, Quaternion.identity);
