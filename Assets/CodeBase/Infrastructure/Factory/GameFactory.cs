@@ -48,6 +48,7 @@ namespace CodeBase.Infrastructure.Factory
         {
             GameObject gameObject = _assetProvider.Instantiate(prefabPath);
             RegisterProgressWatchers(gameObject);
+            
             return gameObject;
         }
 
@@ -57,7 +58,7 @@ namespace CodeBase.Infrastructure.Factory
                 Register(progressReader);
         }
 
-        private void Register(ISavedProgressReader progressReader)
+        public void Register(ISavedProgressReader progressReader)
         {
             if (progressReader is ISavedProgress progressWriter)
                 ProgressWriters.Add(progressWriter);

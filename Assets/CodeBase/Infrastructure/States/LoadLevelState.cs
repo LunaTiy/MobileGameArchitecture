@@ -1,4 +1,6 @@
-﻿using CodeBase.CameraLogic;
+﻿using System;
+using CodeBase.CameraLogic;
+using CodeBase.Enemy;
 using CodeBase.Hero;
 using CodeBase.Infrastructure.Factory;
 using CodeBase.Infrastructure.Services.PersistentProgress;
@@ -11,6 +13,7 @@ namespace CodeBase.Infrastructure.States
     public class LoadLevelState : IPayloadedState<string>
     {
         private const string InitialPointTag = "InitialPoint";
+        private const string EnemySpawnerTag = "EnemySpawner";
 
         private readonly GameStateMachine _gameStateMachine;
         private readonly SceneLoader _sceneLoader;
@@ -45,18 +48,22 @@ namespace CodeBase.Infrastructure.States
             _gameStateMachine.Enter<GameLoopState>();
         }
 
-        private void InformProgressReaders()
-        {
-            foreach (ISavedProgressReader progressReader in _gameFactory.ProgressReaders)
-                progressReader.LoadProgress(_progressService.Progress);
-        }
-
         private void InitializeGameWorld()
         {
+            InitSpawners();
             GameObject hero = InitHero();
             InitHud(hero);
             
             CameraFollow(hero);
+        }
+
+        private void InitSpawners()
+        {
+            foreach (GameObject enemySpawnerObject in GameObject.FindGameObjectsWithTag(EnemySpawnerTag))
+            {
+                EnemySpawner spawner = enemySpawnerObject.GetComponent<EnemySpawner>();
+                _gameFactory.Register(spawner);
+            }
         }
 
         private GameObject InitHero() => 
@@ -72,5 +79,11 @@ namespace CodeBase.Infrastructure.States
 
         private static void CameraFollow(GameObject hero) =>
             Camera.main!.GetComponent<CameraFollow>().Follow(hero);
+
+        private void InformProgressReaders()
+        {
+            foreach (ISavedProgressReader progressReader in _gameFactory.ProgressReaders)
+                progressReader.LoadProgress(_progressService.Progress);
+        }
     }
 }
